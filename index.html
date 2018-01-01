@@ -5,8 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Clarence Lee</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.0/stackblur.min.js"></script>
 </head>
 <body>
-  Hello world
+  <h1>Hello, World</h1>
+  <script>
+    var canvas = document.createElement('canvas'),
+    ctx    = canvas.getContext('2d')
+
+    canvas.width  = '1500'
+    canvas.height = '800'
+
+    R.forEach(
+      () => R.apply(circle, randomPosition()),
+    )(R.range(1, 30))
+      StackBlur.canvasRGBA(canvas, 0, 0, canvas.width, canvas.height, 80)
+
+    document.querySelector('body')
+      .appendChild(canvas)
+
+    function circle(x, y, radius, color) {
+      ctx.beginPath()
+      x = x || 50
+      y = y || 50
+      radius = radius || 20
+      ctx.arc(x, y, radius, 0, 360);
+      ctx.fillStyle = color || 'black'
+      ctx.fill()
+    }
+
+    function randomPosition() {
+      return [
+        p(0, 1000),
+        p(0, 100), 
+        p(10, 400),
+        c()
+      ]
+      
+      function p(min, max) {
+        var m = max - min,
+            out = Math.random() * m + min
+        return out
+      }
+      
+      function c() {
+        var c = ['#a54b9a', 'orange', 'pink'],
+            i = Math.floor(Math.random() * c.length)
+        return c[i]
+      }
+    }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        color: white;
+      }
+
+      h1 {
+        position: absolute;
+        left: 24px;
+        margin-top: 20px;
+        font: 18px/.58 monospace;
+        font-weight: normal;
+      }
+    </style>
 </body>
 </html>
